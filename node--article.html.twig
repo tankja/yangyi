@@ -1,0 +1,106 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a post layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% if content %}
+  <div class="layout--article-default">
+
+    {# == Content top == #}
+    {# ================= #}
+
+   
+      
+        <div class="content-top-wrapper">
+          <div class="container">
+            <div class="row">
+              <section{{ region_attributes.top.addClass('col-12') }}>
+               <h1>  {{ label }}</h1>
+               
+              </section>
+            </div>
+          </div>
+        </div>
+   
+ 
+
+
+    {# == Article content == #}
+    {# ====================== #}
+
+ 
+      <article>
+        <div class="article-content-wrapper">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-lg-8 mx-lg-auto">
+
+               
+                  <div{{ region_attributes.article_header }}>
+                    {{ drupal_block('local_tasks_block') }}
+                    
+                  </div>
+               
+               
+                    <div{{ region_attributes.article_content }}>
+                    {{ node.getCreatedTime|format_date('medium') }}
+                     {{ content }}
+                    </div>
+                
+ 
+                {% block article_comments %}
+                  {% if content.article_comments %}
+                    <div{{ region_attributes.article_comments }} >
+                      {{ content.article_comments }}
+                    </div>
+                  {% endif %}
+                {% endblock %}
+              </div>
+
+              <aside class="sidebar col-12 col-lg-4 mt-5 mt-lg-0 js-sticky-elements">
+                <div{{ region_attributes.right_sidebar }}>
+
+                <div class="block-title-wrapper">
+                  <h2 class="block__title block-title">
+                  최신글
+                  </h2>
+                </div>
+                 
+                 {{ drupal_view('em_latest', 'block_1') }}
+                 {{ drupal_entity('block_content', '6') }}
+                
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </article>
+  
+
+
+  {# == Content bottom == #}
+  {# ==================== #}
+
+
+      <div class="content-bottom-wrapper">
+        <div class="container">
+          <div class="row">
+            <section{{ region_attributes.bottom.addClass('col-12') }}>
+              {{ content.bottom }}
+            </section>
+          </div>
+        </div>
+      </div>
+   
+
+
+  </div>
+{% endif %}
